@@ -4,12 +4,6 @@
 
 set -e
 
-# Environment variables must be provided
-if [ -z ${PASSWORD+x} ] ; then
-    echo "PASSWORD must be provided"
-    exit 2
-fi
-
 /usr/local/bin/wait-for-it.sh -t 0 data-loader:80 -- echo "Data loader is up"
 #jupyter trust /notebooks/notebook.ipynb
 

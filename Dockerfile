@@ -81,11 +81,6 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix \
 
 USER root
 
-### Custom stuff 
-# Install KBC Transformation package
-RUN pip3 install --no-cache-dir --upgrade --force-reinstall git+git://github.com/keboola/python-docker-application.git@2.1.1 \
-    && pip3 install --no-cache-dir --upgrade git+git://github.com/keboola/python-transformation.git@1.1.13
-
 ### Install Julia Kernel
 ENV JUPYTER /usr/local/bin/jupyter
 # install packages "globally"
