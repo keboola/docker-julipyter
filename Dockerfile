@@ -95,13 +95,12 @@ WORKDIR /data/
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
-CMD ["start-notebook.sh"]
+CMD ["start.sh", "jupyter", "notebook"]
 
 # Add local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
-COPY start-notebook.sh /usr/local/bin/
-COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
 COPY wait-for-it.sh /usr/local/bin/
+COPY install.jl /usr/local/bin/
 
 RUN chown -R $NB_USER:users /etc/jupyter/

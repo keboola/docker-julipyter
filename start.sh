@@ -6,6 +6,7 @@ set -e
 
 /usr/local/bin/wait-for-it.sh -t 0 data-loader:80 -- echo "Data loader is up"
 #jupyter trust /notebooks/notebook.ipynb
+julia /usr/local/bin/install.jl
 
 # Handle special flags if we're root
 if [ $UID == 0 ] ; then
