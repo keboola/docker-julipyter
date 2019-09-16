@@ -1,4 +1,4 @@
-# Julia Jupyter
+# Julia Jupyter [![Build Status](https://travis-ci.com/keboola/docker-julipyter.svg?branch=master)](https://travis-ci.com/keboola/docker-julipyter)
 Docker image with [Jupyter sandbox](https://help.keboola.com/manipulation/transformations/sandbox/) with 
 [Julia](https://julialang.org/) based on Keboola 
 [Custom Julia](https://github.com/keboola/docker-custom-julia) which is shared between 
