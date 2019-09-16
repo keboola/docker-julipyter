@@ -25,4 +25,4 @@ services:
     environment:
       - PASSWORD=test
       - TAGS=["cat"]
-      - PACKAGES=["ccxt"]
+      - PACKAGES=[]

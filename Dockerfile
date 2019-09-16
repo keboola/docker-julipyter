@@ -1,4 +1,4 @@
-FROM quay.io/keboola/docker-custom-julia:0.1.0
+FROM quay.io/keboola/docker-custom-julia:0.2.0
 
 # Taken from https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/Dockerfile
 
@@ -81,11 +81,6 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix \
 
 USER root
 
-### Custom stuff 
-# Install KBC Transformation package
-RUN pip3 install --no-cache-dir --upgrade --force-reinstall git+git://github.com/keboola/python-docker-application.git@2.1.1 \
-    && pip3 install --no-cache-dir --upgrade git+git://github.com/keboola/python-transformation.git@1.1.13
-
 ### Install Julia Kernel
 ENV JUPYTER /usr/local/bin/jupyter
 # install packages "globally"
@@ -100,13 +95,12 @@ WORKDIR /data/
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
-CMD ["start-notebook.sh"]
+CMD ["start.sh", "jupyter", "notebook"]
 
 # Add local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
-COPY start-notebook.sh /usr/local/bin/
-COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
 COPY wait-for-it.sh /usr/local/bin/
+COPY install.jl /usr/local/bin/
 
 RUN chown -R $NB_USER:users /etc/jupyter/
