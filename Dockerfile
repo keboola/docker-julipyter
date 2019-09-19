@@ -1,4 +1,4 @@
-FROM quay.io/keboola/docker-custom-julia:0.2.0
+FROM quay.io/keboola/docker-custom-julia:0.2.1
 
 # Taken from https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/Dockerfile
 
@@ -17,8 +17,6 @@ RUN apt-get update && apt-get upgrade -yq python3 \
         lmodern \
         pandoc \
         python-dev \
-        python3-pip \
-        python3-setuptools \
         texlive-fonts-extra \
         texlive-fonts-recommended \
         texlive-generic-recommended \
