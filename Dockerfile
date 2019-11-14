@@ -107,9 +107,11 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix \
 ENV JUPYTER /usr/local/bin/jupyter
 # install packages "globally"
 ENV JULIA_DEPOT_PATH /opt/julia-packages/
-RUN julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.build("IJulia"); using IJulia' 
+RUN julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.build("IJulia"); using IJulia'
+RUN fix-permissions /opt/julia-packages
+
 # using IJulia is there to precompile the kernel
-RUN jupyter kernelspec install /home/root/.local/share/jupyter/kernels/julia-1.2/ \
+RUN jupyter kernelspec install /home/$NB_USER/.local/share/jupyter/kernels/julia-1.2/ \
     && yes | jupyter kernelspec uninstall python3
 
 EXPOSE 8888
