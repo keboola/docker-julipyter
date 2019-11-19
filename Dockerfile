@@ -117,6 +117,8 @@ RUN jupyter kernelspec install /home/$NB_USER/.local/share/jupyter/kernels/julia
 EXPOSE 8888
 WORKDIR /data/
 RUN fix-permissions /data
+USER $NB_UID
+CMD chmod g+s /data
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
