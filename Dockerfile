@@ -130,6 +130,7 @@ COPY jupyter_notebook_config.py /etc/jupyter/
 COPY wait-for-it.sh /usr/local/bin/
 COPY install.jl /usr/local/bin/
 
+USER root
 RUN fix-permissions /home/$NB_USER
 RUN chown -R $NB_USER:$NB_GID /etc/jupyter/
 
