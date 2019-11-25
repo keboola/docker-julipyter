@@ -6,7 +6,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ./data:/data/
+      - ./data:/data
     environment:
       - KBC_CONFIG_ID
       - KBC_ROW_ID
@@ -18,8 +18,8 @@ services:
     image: keboola/docker-julipyter
     tty: true
     stdin_open: true
-    volumes_from:
-      - data-loader
+    volumes:
+      - ./data:/data
     ports:
       - "8888:8888"
     environment:
