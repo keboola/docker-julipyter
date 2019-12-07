@@ -43,3 +43,10 @@ else
     echo "Execute the command"
     exec $*
 fi
+
+chgrp -R $NB_GID /data
+chmod -R 0777 /data
+# make sure all future files/folders are under groupID 100
+chmod -R g+s /data
+# make sure GID 100 has permissions on all future files/folders in the data dir
+setfacl -R -m g::rwx /data
