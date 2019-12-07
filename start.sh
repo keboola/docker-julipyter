@@ -6,7 +6,20 @@ set -e
 
 /usr/local/bin/wait-for-it.sh -t 0 data-loader:80 -- echo "Data loader is up"
 #jupyter trust /notebooks/notebook.ipynb
-julia /usr/local/bin/install.jl
+gosu $NB_USER julia /usr/local/bin/install.jl
+
+chgrp -R $NB_GID /data
+chown -R $NB_USER /data
+chmod -R 0777 /data
+# make sure all future files/folders are under groupID 100
+chmod -R g+s /data
+chmod -R u+s /data
+umask 007
+# make sure GID 100 has permissions on all future files/folders in the data dir
+setfacl -d -m g::rwx /data
+echo "directory permissions set"
+touch /data/testfile
+ls -haltr > /data/testfile
 
 # Handle special flags if we're root
 if [ $UID == 0 ] ; then
@@ -37,16 +50,9 @@ if [ $UID == 0 ] ; then
 
     # Exec the command as NB_USER
     echo "Execute the command as $NB_USER"
-    exec su $NB_USER -c "env PATH=$PATH $*"
+    exec gosu $NB_USER $*
 else
     # Exec the command
     echo "Execute the command"
-    exec $*
+    exec gosu $NB_USER $*
 fi
-
-chgrp -R $NB_GID /data
-chmod -R 0777 /data
-# make sure all future files/folders are under groupID 100
-chmod -R g+s /data
-# make sure GID 100 has permissions on all future files/folders in the data dir
-setfacl -R -m g::rwx /data

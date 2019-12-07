@@ -29,6 +29,7 @@ RUN apt-get update && apt-get upgrade -yq python3 \
         texlive-xetex \
         unzip \
         acl\
+        gosu\
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -116,10 +117,9 @@ RUN jupyter kernelspec install /home/$NB_USER/.local/share/jupyter/kernels/julia
     && yes | jupyter kernelspec uninstall python3
 
 EXPOSE 8888
-WORKDIR /data/
+WORKDIR /data
 RUN fix-permissions /data
 
-USER $NB_UID
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
 CMD ["start.sh", "jupyter", "notebook"]
@@ -133,5 +133,3 @@ COPY install.jl /usr/local/bin/
 USER root
 RUN fix-permissions /home/$NB_USER
 RUN chown -R $NB_USER:$NB_GID /etc/jupyter/
-
-USER $NB_USER
