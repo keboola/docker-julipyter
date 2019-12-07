@@ -118,8 +118,11 @@ EXPOSE 8888
 WORKDIR /data/
 RUN fix-permissions /data
 USER $NB_UID
-CMD chmod -R g+s /data
-CMD chmod -R 0777 /data
+# make sure all future files/folders are under groupID 100
+RUN chmod -R g+s /data
+# make sure GID 100 has permissions on all future files/folders in the data dir
+RUN setfacl -R -m g::rwx /data
+RUN chmod -R 0777 /data
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
