@@ -1,4 +1,4 @@
-FROM quay.io/keboola/docker-custom-julia:1.0.0
+FROM quay.io/keboola/docker-custom-julia:2.1.0
 
 ARG NB_USER="julipyter"
 ARG NB_UID="1000"
@@ -111,7 +111,7 @@ RUN julia -e 'using Pkg; Pkg.add("IJulia"); Pkg.build("IJulia"); using IJulia'
 RUN fix-permissions /opt/julia-packages
 
 # using IJulia is there to precompile the kernel
-RUN jupyter kernelspec install /home/$NB_USER/.local/share/jupyter/kernels/julia-1.4/ \
+RUN jupyter kernelspec install /home/$NB_USER/.local/share/jupyter/kernels/julia-1.5/ \
     && yes | jupyter kernelspec uninstall python3
 
 EXPOSE 8888
